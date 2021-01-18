@@ -15,7 +15,7 @@ public class MainView extends VerticalLayout {
     public MainView() {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         setSizeFull();
-        addClassName("homepage");
-        MenuBar.addMenuBar();
+        addClassName("library");
+        add(Header.addMenuBar());
     }
 }
