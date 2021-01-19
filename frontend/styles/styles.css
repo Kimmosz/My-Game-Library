@@ -18,11 +18,22 @@ H2 {
     margin-top: 0px;
 }
 
+.home {
+    background-color: #f5f5f5;
+}
 
 .library {
     background-color: #f5f5f5;
 }
 
+.game {
+    background-color: #f5f5f5;
+}
+
 .register {
+    background-color: #f5f5f5;
+}
+
+.login {
     background-color: #f5f5f5;
 }

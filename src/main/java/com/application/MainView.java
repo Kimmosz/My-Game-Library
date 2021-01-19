@@ -13,9 +13,10 @@ import com.vaadin.flow.server.PWA;
 public class MainView extends VerticalLayout {
 
     public MainView() {
+        SessionAttributes.deselectGame();
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         setSizeFull();
-        addClassName("library");
+        addClassName("home");
         add(Header.addMenuBar());
     }
 }

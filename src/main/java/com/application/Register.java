@@ -20,81 +20,86 @@ import com.vaadin.flow.router.Route;
 public class Register extends VerticalLayout {
 
     public Register() {
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        setSizeFull();
-        addClassName("register");
-        add(Header.addMenuBar());
+        if (SessionAttributes.getLoggedUser() == null) {
+            setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+            setSizeFull();
+            addClassName("register");
+            add(Header.addMenuBar());
 
-        H2 pageTitle = new H2("Register");
-        
-        FormLayout registerLayout = new FormLayout();
-        
-        TextField usernameField = new TextField("Username"); 
-        usernameField.setRequired(true);
-        usernameField.setErrorMessage("Enter a username");
+            H2 pageTitle = new H2("Register");
+            
+            FormLayout registerLayout = new FormLayout();
+            
+            TextField usernameField = new TextField("Username"); 
+            usernameField.setRequired(true);
+            usernameField.setErrorMessage("Enter a username");
 
-        EmailField emailField = new EmailField("Email");
-        emailField.setRequiredIndicatorVisible(true);
-        emailField.setErrorMessage("Enter a valid email address");
+            EmailField emailField = new EmailField("Email");
+            emailField.setRequiredIndicatorVisible(true);
+            emailField.setErrorMessage("Enter a valid email address");
 
-        PasswordField passwordField = new PasswordField("Password");
-        passwordField.setRequired(true);
-        passwordField.setErrorMessage("Enter a password");
+            PasswordField passwordField = new PasswordField("Password");
+            passwordField.setRequired(true);
+            passwordField.setErrorMessage("Enter a password");
 
-        PasswordField passwordCheckField = new PasswordField("Password check");
-        passwordCheckField.setRequired(true);
-        passwordCheckField.setErrorMessage("Verify password");
+            PasswordField passwordCheckField = new PasswordField("Password check");
+            passwordCheckField.setRequired(true);
+            passwordCheckField.setErrorMessage("Verify password");
 
-        Span errorMessage = new Span();
-        errorMessage.getStyle().set("color", "var(--lumo-error-text-color)");
-        errorMessage.getStyle().set("padding", "15px 0");
+            Span errorMessage = new Span();
+            errorMessage.getStyle().set("color", "var(--lumo-error-text-color)");
+            errorMessage.getStyle().set("padding", "15px 0");
 
-        Button registerButton = new Button("Register");
-        registerButton.addClickListener(event -> registerCheck(usernameField.getValue(), emailField.getValue(), passwordField.getValue(), passwordCheckField.getValue(), errorMessage));
-        registerButton.setEnabled(false);
-        
-        Button cancelButton = new Button("Cancel");
-        cancelButton.addClickListener(event -> cancelButton.getUI().ifPresent(ui -> ui.navigate("")));
+            Button registerButton = new Button("Register");
+            registerButton.addClickListener(event -> registerCheck(usernameField.getValue(), emailField.getValue(), passwordField.getValue(), passwordCheckField.getValue(), errorMessage));
+            registerButton.setEnabled(false);
+            
+            Button cancelButton = new Button("Cancel");
+            cancelButton.addClickListener(event -> cancelButton.getUI().ifPresent(ui -> ui.navigate("")));
 
-        usernameField.addValueChangeListener(event -> {
-            if (usernameField.isEmpty() || emailField.isEmpty() || emailField.isInvalid() || passwordField.isEmpty() || passwordCheckField.isEmpty()) {
-                registerButton.setEnabled(false);
-            } else {
-                registerButton.setEnabled(true);
-            }
-        });
+            usernameField.addValueChangeListener(event -> {
+                if (usernameField.isEmpty() || emailField.isEmpty() || emailField.isInvalid() || passwordField.isEmpty() || passwordCheckField.isEmpty()) {
+                    registerButton.setEnabled(false);
+                } else {
+                    registerButton.setEnabled(true);
+                }
+            });
 
-        emailField.addValueChangeListener(event -> {
-            if (usernameField.isEmpty() || emailField.isEmpty() || emailField.isInvalid() || passwordField.isEmpty() || passwordCheckField.isEmpty()) {
-                registerButton.setEnabled(false);
-            } else {
-                registerButton.setEnabled(true);
-            }
-        });
+            emailField.addValueChangeListener(event -> {
+                if (usernameField.isEmpty() || emailField.isEmpty() || emailField.isInvalid() || passwordField.isEmpty() || passwordCheckField.isEmpty()) {
+                    registerButton.setEnabled(false);
+                } else {
+                    registerButton.setEnabled(true);
+                }
+            });
 
-        passwordField.addValueChangeListener(event -> {
-            if (usernameField.isEmpty() || emailField.isEmpty() || emailField.isInvalid() || passwordField.isEmpty() || passwordCheckField.isEmpty()) {
-                registerButton.setEnabled(false);
-            } else {
-                registerButton.setEnabled(true);
-            }
-        });
+            passwordField.addValueChangeListener(event -> {
+                if (usernameField.isEmpty() || emailField.isEmpty() || emailField.isInvalid() || passwordField.isEmpty() || passwordCheckField.isEmpty()) {
+                    registerButton.setEnabled(false);
+                } else {
+                    registerButton.setEnabled(true);
+                }
+            });
 
-        passwordCheckField.addValueChangeListener(event -> {
-            if (usernameField.isEmpty() || emailField.isEmpty() || emailField.isInvalid() || passwordField.isEmpty() || passwordCheckField.isEmpty()) {
-                registerButton.setEnabled(false);
-            } else {
-                registerButton.setEnabled(true);
-            }
-        });
+            passwordCheckField.addValueChangeListener(event -> {
+                if (usernameField.isEmpty() || emailField.isEmpty() || emailField.isInvalid() || passwordField.isEmpty() || passwordCheckField.isEmpty()) {
+                    registerButton.setEnabled(false);
+                } else {
+                    registerButton.setEnabled(true);
+                }
+            });
 
-        registerLayout.add(pageTitle, usernameField, emailField, passwordField, passwordCheckField, errorMessage, registerButton, cancelButton);
-        registerLayout.setMaxWidth("500px");
-        registerLayout.getStyle().set("margin","0 auto");
-        registerLayout.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP), new FormLayout.ResponsiveStep("490px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP));
-        registerLayout.setColspan(pageTitle, 2);
-        registerLayout.setColspan(errorMessage, 2);
-        add(registerLayout);
+            registerLayout.add(pageTitle, usernameField, emailField, passwordField, passwordCheckField, errorMessage, registerButton, cancelButton);
+            registerLayout.setMaxWidth("500px");
+            registerLayout.getStyle().set("margin","0 auto");
+            registerLayout.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP), new FormLayout.ResponsiveStep("490px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP));
+            registerLayout.setColspan(pageTitle, 2);
+            registerLayout.setColspan(errorMessage, 2);
+            add(registerLayout);
+        } else {
+            UI.getCurrent().navigate("Library");
+            UI.getCurrent().getPage().reload();
+        }
     }
 
     private void registerCheck(String username, String email, String password, String passwordCheck, Span errorMessage) {
